@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Greg's Music Library</title>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<nav>
+					<ul class="pagination justify-content-start">
+						<li class="page-item"><button class="page-link js-add-new-album">+ New Album</button></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-sm-6">
+				<nav>
+					<ul class="pagination justify-content-end">
+						<li class="page-item active"><button class="page-link js-pagination-1">1</button></li>
+						<li class="page-item"><button class="page-link js-pagination-2">2</button></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="row js-results">
+
+		</div>
+
+	</div>
+
+	<div class="modal-background js-modal-background"></div>
+	<div class="modal js-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Album</h5>
+					<button type="button" class="close js-modal-close">
+						<span>&times;</span>
+					</button>
+				</div>
+				<form class="js-modal-form">
+					<div class="modal-body">
+						<label for="albumTitle">Album title</label>
+						<input id="albumTitle" type="text" name="albumTitle" class="form-control" value="">
+						<label for="artist">Artist</label>
+						<input id="artist" type="text" name="artist" class="form-control" value="">
+						<label for="year">Year</label>
+						<input id="year" type="text" name="year" class="form-control" value="">
+						<label for="condition">Condition</label>
+						<input id="condition" type="text" name="condition" class="form-control" value="">
+						<input type="hidden" name="albumId" value="">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger js-modal-album-delete">Delete Album</button>
+						<button type="button" class="btn btn-primary js-modal-album-update">Save Changes</button>
+						<button type="button" class="btn btn-success js-modal-album-add d-none">Add New</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
