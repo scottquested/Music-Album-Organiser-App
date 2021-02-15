@@ -9,6 +9,7 @@
     const modalDelete = document.querySelector('.js-modal-album-delete')
     const pagination1 = document.querySelector('.js-pagination-1')
     const pagination2 = document.querySelector('.js-pagination-2')
+    const search = document.querySelector('.js-search')
 
     // Main array to hold all albums
     let albums = [];
@@ -150,6 +151,8 @@
     // Fetch all the data we need
     fetchData('https://gist.githubusercontent.com/seanders/df38a92ffc4e8c56962e51b6e96e188f/raw/b032669142b7b57ede3496dffee5b7c16b8071e1/page1.json')
         .then(data => {
+
+            // TODO use map
             for (let i = 0; i < data.results.length; i++) {
                 pushAlbumData(data.results[i], albumsId)
                 albumsId++
@@ -157,12 +160,15 @@
 
             fetchData(data.nextPage)
                 .then(data => {
+
+                    // TODO use map
                     for (let i = 0; i < data.results.length; i++) {
                         pushAlbumData(data.results[i], albumsId)
                         albumsId++
                     }
                 }).then(() => {
 
+                // TODO use map
                 // Render the albums now that we have all the data
                 for (let i = 0; i < 25; i++) {
                     renderAlbums(albums[i])
@@ -171,7 +177,7 @@
         })
 
     // Click event across the body so we can pick up any new ones
-    document.body.addEventListener('click', (e) => {
+    document.body.addEventListener('click', e => {
 
         e.preventDefault()
 
@@ -292,7 +298,19 @@
 
     })
 
+    search.addEventListener('keyup', e => {
 
-    // Search albums
+        // Only start once user has more than 3 letters
+        if (e.target.value.length < 3) return
+
+        console.log(e.target.value);
+
+        const matchAlbums = albums.map((o) => {return o.album_title; }).indexOf(e.target.value)
+        const matchArtists = albums.map((o) => {return o.artist.name; }).indexOf(e.target.value)
+
+        console.log(matchAlbums)
+        console.log(matchArtists)
+
+    })
 
 })(document, window);

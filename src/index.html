@@ -8,14 +8,17 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-3">
 				<nav>
 					<ul class="pagination justify-content-start">
 						<li class="page-item"><button class="page-link js-add-new-album">+ New Album</button></li>
 					</ul>
 				</nav>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 text-center">
+				<input id="search" type="text" name="search" class="form-control js-search" placeholder="Search form your album..." value="">
+			</div>
+			<div class="col-sm-3">
 				<nav>
 					<ul class="pagination justify-content-end">
 						<li class="page-item active"><button class="page-link js-pagination-1">1</button></li>
@@ -24,10 +27,7 @@
 				</nav>
 			</div>
 		</div>
-		<div class="row js-results">
-
-		</div>
-
+		<div class="row js-results"></div>
 	</div>
 
 	<div class="modal-background js-modal-background"></div>
