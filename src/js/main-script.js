@@ -7,6 +7,7 @@
     const modalAdd = document.querySelector('.js-modal-album-add')
     const modalUpdate = document.querySelector('.js-modal-album-update')
     const modalDelete = document.querySelector('.js-modal-album-delete')
+    const modalTitle = document.querySelector('.js-modal-title')
     const pagination1 = document.querySelector('.js-pagination-1')
     const pagination2 = document.querySelector('.js-pagination-2')
     const search = document.querySelector('.js-search')
@@ -68,9 +69,9 @@
         template.innerHTML =
             `<article class="card h-100 js-album-card" data-id="${data.id}">
                 <div class="card-body">
-                    <h1 class="h5">${data.album_title}</h1>
-                    <h2 class="h6 mb-4">${data.artist.name}</h2>
-                    <p class="card-text">Year: ${data.year}</p>
+                    <h1 class="h5 card-body-title">${data.album_title}</h1>
+                    <h2 class="h6 mb-4 card-body-sub">${data.artist.name}</h2>
+                    <p class="card-text"><i class="fa fa-calendar"></i> ${data.year}</p>
                     <p class="card-text">Condition: ${conditionStars}</p>
                 </div>
                 <div class="card-footer">
@@ -233,6 +234,9 @@
             // Add thr album ID to the modal
             modal.setAttribute('data-id', albumId);
 
+            // Update the modal title
+            modalTitle.innerHTML = 'Edit album'
+
             // Open the modal
             openModal()
 
@@ -292,6 +296,9 @@
             modalDelete.classList.add('d-none')
             modalUpdate.classList.add('d-none')
             modalAdd.classList.remove('d-none')
+
+            // Update the modal title
+            modalTitle.innerHTML = 'Add new album'
 
             // Clear the form fields
             modalForm.reset()
@@ -358,6 +365,33 @@
 
         }
 
+        if (e.target.classList.contains('js-album-fav-edit')) {
+
+            // Get the album ID from the album card
+            const albumId = e.target.closest('.js-modal').getAttribute('data-id');
+
+            // Find the album index within the main array
+            const albumPos = albums.map((o) => {return o.id; }).indexOf(parseInt(albumId))
+
+            if (e.target.classList.contains('fa-heart-o')) {
+
+                e.target.classList.remove('fa-heart-o')
+                e.target.classList.add('fa-heart')
+
+                // Set the fav field
+                albums[albumPos].fav = true;
+
+            } else {
+
+                e.target.classList.remove('fa-heart')
+                e.target.classList.add('fa-heart-o')
+
+                // Set the fav field
+                albums[albumPos].fav = false;
+            }
+
+        }
+
         if (e.target.classList.contains('js-show-fav')) {
 
             if (!e.target.classList.contains('active')) {
@@ -375,10 +409,16 @@
                 // Clear all albums from the doc
                 resultsEl.innerHTML = '';
 
-                // Render the returned indexes for albums
-                matchFavs.map((o) => {
-                    renderAlbums(o)
-                })
+                if (matchFavs.length > 0) {
+
+                    // Render the returned indexes for albums
+                    matchFavs.map((o) => {
+                        renderAlbums(o)
+                    })
+
+                } else {
+                    resultsEl.innerHTML = '<div class="col-md-12"><h2>You have no favorites at the moment</h2></div>';
+                }
 
             } else {
 

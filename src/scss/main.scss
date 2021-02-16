@@ -1,5 +1,50 @@
 body {
-	margin-top: 5em;
+	color: white;
+	background-color: #121215;
+}
+
+.main-title {
+	padding-bottom: 0.5em;
+	font-size: 42px;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: 1px solid #404040;
+}
+
+.page-item {
+	&.active {
+		.page-link {
+			background-color: #c477ea;
+			border-color: transparent;
+		}
+	}
+
+	&:first-of-type {
+		.page-link {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+
+	&:last-of-type {
+		.page-link {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+	}
+}
+
+.page-link {
+	background-color: #1b1e21;
+	border: 1px solid #404040;
+	color: white;
+	border-radius: 5px;
+
+	&:hover {
+		border: 1px solid #404040;
+		background-color: darken(#1b1e21, 5%);
+		color: white;
+	}
 }
 
 .modal-background {
@@ -13,14 +58,66 @@ body {
 	background-color: rgba(0,0,0, 0.7);
 }
 
+.modal-content {
+	background-color: #1b1e21;
+	border: 1px solid #404040;
+
+	.modal-header {
+		border-bottom: 1px solid #404040;
+	}
+
+	.modal-title {
+		color: #c477ea;
+	}
+
+	.modal-footer {
+		border-top: 1px solid #404040;
+	}
+}
+
 .close {
 	span {
 		position: relative;
 		z-index: -1;
+		text-shadow: none;
+		color: white;
 	}
+}
+
+.form-control {
+	background-color: #1b1e21;
+	border: 1px solid #404040;
+	color: white;
+
+	&:focus {
+		background-color: darken(#1b1e21, 5%);
+		border: 1px solid #404040;
+		color: white;
+	}
+}
+
+.card {
+	background-color: #1b1e21;
+	border: 1px solid #404040;
+
+	.card-footer {
+		border-top: 1px solid #404040;
+	}
+}
+
+.card-body-title {
+	font-weight: bolder;
+}
+
+.card-body-sub {
+	color: #c477ea;
 }
 
 .fa-heart-o, .fa-heart {
 	color: #cf2323;
 	cursor: pointer;
+}
+
+.fa-star {
+	color: #a08c2f;
 }
