@@ -112,7 +112,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'docs'),
 		pathinfo: false,
-		publicPath: 'Music-Album-Organiser-App/',
+		publicPath: '.',
 		filename: env === 'production' ? 'js/min/[name].bundle.min.js?[contenthash:8]' : 'js/[name].bundle.js'
 	}
 }
