@@ -10,6 +10,7 @@
     const pagination1 = document.querySelector('.js-pagination-1')
     const pagination2 = document.querySelector('.js-pagination-2')
     const search = document.querySelector('.js-search')
+    const filterFavs = document.querySelector('.js-show-fav')
 
     // Main array to hold all albums
     let albums = [];
@@ -17,7 +18,7 @@
     // Use our own ID system so we dont rely on the array index
     let albumsId = 0;
 
-    const fetchData = async (url) => {
+    const fetchData = async url => {
         const response = await fetch(url);
         return await response.json();
     }
@@ -38,10 +39,28 @@
         albums.push(albumData)
     }
 
-    // Render albums
-    const renderAlbums = (data) => {
+    const renderAlbums = data => {
 
         const template = document.createElement('div');
+
+        let conditionStars = ''
+
+        switch (data.condition) {
+            case 'poor':
+                conditionStars = '<i class="fa fa-star"></i><i class="fa fa-star"></i>'
+                break
+            case 'fair':
+                conditionStars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>'
+                break
+            case 'very_good':
+                conditionStars = '<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>'
+                break
+            case 'mint':
+                conditionStars = `<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>`
+                break
+            default:
+                conditionStars = '<i class="fa fa-star"></i>'
+        }
 
         // Add the CSS classes for the album container
         template.classList.add('col-sm-12', 'col-md-6', 'col-lg-4', 'mb-4');
@@ -49,13 +68,14 @@
         template.innerHTML =
             `<article class="card h-100 js-album-card" data-id="${data.id}">
                 <div class="card-body">
-                    <h1 class="h4">${data.album_title}</h1>
-                    <h2 class="h5">${data.artist.name}</h2>
-                    <p class="card-text">${data.year}</p>
-                    <p class="card-text">${data.condition}</p>
+                    <h1 class="h5">${data.album_title}</h1>
+                    <h2 class="h6 mb-4">${data.artist.name}</h2>
+                    <p class="card-text">Year: ${data.year}</p>
+                    <p class="card-text">Condition: ${conditionStars}</p>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-sm btn-warning js-album-edit">Edit Album</button>
+                    <button class="btn btn-sm btn-dark js-album-edit">Edit Album</button>
+                    <i class="fa ${data.fav ? 'fa-heart' : 'fa-heart-o'} pull-right mt-2 js-album-fav"></i>
                 </div>
             </article>`;
 
@@ -77,31 +97,46 @@
         modal.style.display = 'none';
     }
 
-    const refreshAlbums = (page) => {
-        if (page === 1) {
+    const favsFilter = (type = '') => {
 
-            // Clear all albums from the doc
-            resultsEl.innerHTML = '';
-
-            // Render the albums
-            // TODO: Use map
-            for (let i = 0; i < 25; i++) {
-                renderAlbums(albums[i])
-            }
-        } else if (page === 2) {
-
-            // Clear all albums from the doc
-            resultsEl.innerHTML = '';
-
-            // Render the albums
-            // TODO: Use map
-            for (let i = 25; i < albums.length; i++) {
-                renderAlbums(albums[i])
-            }
+        if (type === 'active') {
+            filterFavs.classList.add('active')
+            filterFavs.querySelector('i').classList.add('fa-heart')
+            filterFavs.querySelector('i').classList.remove('fa-heart-o')
+        } else {
+            filterFavs.classList.remove('active')
+            filterFavs.querySelector('i').classList.add('fa-heart-o')
+            filterFavs.querySelector('i').classList.remove('fa-heart')
         }
     }
 
-    const editDeleteAlbum = (type) => {
+    const refreshAlbums = () => {
+
+        if (pagination1.closest('li').classList.contains('active')) {
+
+            // Clear all albums from the doc
+            resultsEl.innerHTML = '';
+
+            // Render the albums
+            for (let i = 0; i < 25; i++) {
+                renderAlbums(albums[i])
+            }
+
+        } else {
+
+            // Clear all albums from the doc
+            resultsEl.innerHTML = '';
+
+            // Render the albums
+            for (let i = 25; i < albums.length; i++) {
+                renderAlbums(albums[i])
+            }
+
+        }
+
+    }
+
+    const editDeleteAlbum = type => {
 
         // Get the ID of the album from the modal
         const albumId = modal.getAttribute('data-id')
@@ -139,12 +174,11 @@
             albums.splice(albumPos, 1)
         }
 
+        // Switch off favs filter
+        favsFilter()
+
         // Check what page we're on and refresh
-        if (pagination1.closest('li').classList.contains('active')) {
-            refreshAlbums(1);
-        } else {
-            refreshAlbums(2);
-        }
+        refreshAlbums()
 
         // Close the modal
         closeModal()
@@ -154,25 +188,25 @@
     fetchData('https://gist.githubusercontent.com/seanders/df38a92ffc4e8c56962e51b6e96e188f/raw/b032669142b7b57ede3496dffee5b7c16b8071e1/page1.json')
         .then(data => {
 
-            // TODO use map
-            for (let i = 0; i < data.results.length; i++) {
-                pushAlbumData(data.results[i], albumsId)
+            const albumsFound = data.results.length
+
+            data.results.map(o => {
+                pushAlbumData(o, albumsId)
                 albumsId++
-            }
+            })
 
             fetchData(data.nextPage)
                 .then(data => {
 
-                    // TODO use map
-                    for (let i = 0; i < data.results.length; i++) {
-                        pushAlbumData(data.results[i], albumsId)
+                    data.results.map(o => {
+                        pushAlbumData(o, albumsId)
                         albumsId++
-                    }
+                    })
+
                 }).then(() => {
 
-                // TODO use map
-                // Render the albums now that we have all the data
-                for (let i = 0; i < 25; i++) {
+                // Render the albums for page 1
+                for (let i = 0; i < albumsFound; i++) {
                     renderAlbums(albums[i])
                 }
             })
@@ -216,22 +250,28 @@
 
         if (e.target.classList.contains('js-pagination-1')) {
 
-            // Refresh on page 2
-            refreshAlbums(1);
+            // Switch off favs filter
+            favsFilter()
 
             // Set the pagination
             pagination2.closest('li').classList.remove('active');
             e.target.closest('li').classList.add('active');
+
+            // Refresh the albums
+            refreshAlbums();
         }
 
         if (e.target.classList.contains('js-pagination-2')) {
 
-            // Refresh on page 2
-            refreshAlbums(2);
+            // Switch off favs filter
+            favsFilter()
 
             // Set the pagination
             pagination1.closest('li').classList.remove('active');
             e.target.closest('li').classList.add('active');
+
+            // Refresh the albums
+            refreshAlbums();
         }
 
         if (e.target.classList.contains('js-modal-album-update')) {
@@ -287,16 +327,66 @@
             // Add the new album to the main array
             albums.push(newAlbum);
 
-            // TODO: Add this to the refreshAlbums function
             // Check what page we're on and refresh
-            if (pagination1.closest('li').classList.contains('active')) {
-                refreshAlbums(1);
-            } else {
-                refreshAlbums(2);
-            }
+            refreshAlbums();
 
             // Close Modal
             closeModal()
+        }
+
+        if (e.target.classList.contains('js-album-fav')) {
+
+            // Get the album ID from the album card
+            const albumId = e.target.closest('.js-album-card').getAttribute('data-id');
+
+            // Find the album index within the main array
+            const albumPos = albums.map((o) => {return o.id; }).indexOf(parseInt(albumId))
+
+            // Set the fav field
+            albums[albumPos].fav = e.target.classList.contains('fa-heart-o');
+
+            if (!filterFavs.classList.contains('active')) {
+
+                // Check what page we're on and refresh
+                refreshAlbums();
+
+            } else {
+
+                // Remove the card from the page
+                return document.querySelector(`[data-id="${albumId}"]`).parentElement.remove()
+            }
+
+        }
+
+        if (e.target.classList.contains('js-show-fav')) {
+
+            if (!e.target.classList.contains('active')) {
+
+                // Switch on favs filter
+                favsFilter('active')
+
+                // Filter the albums and return the index of found item(s)
+                const matchFavs = albums.filter(o => {
+                    if (o.fav) {
+                        return albums.indexOf(o) > -1
+                    }
+                });
+
+                // Clear all albums from the doc
+                resultsEl.innerHTML = '';
+
+                // Render the returned indexes for albums
+                matchFavs.map((o) => {
+                    renderAlbums(o)
+                })
+
+            } else {
+
+                // Switch off favs filter
+                favsFilter()
+                refreshAlbums()
+            }
+
         }
 
     })
@@ -304,18 +394,20 @@
     // User starts with the search
     search.addEventListener('keyup', e => {
 
-        // Only start once user has more than 3 letters
-        if (e.target.value.length < 3) {
+        // Only start once user has more than 2 letters
+        if (e.target.value.length < 2) {
+
+            // Switch off favs filter
+            favsFilter()
 
             // Check what page we're on and refresh
-            if (pagination1.closest('li').classList.contains('active')) {
-                refreshAlbums(1);
-            } else {
-                refreshAlbums(2);
-            }
+            refreshAlbums();
 
             return
         }
+
+        // Switch off favs filter
+        favsFilter()
 
         // Set a case-insensitive regex
         const regexp = new RegExp(e.target.value, 'i');
@@ -337,8 +429,6 @@
         matchAlbums.map((o) => {
             renderAlbums(o)
         })
-
-        //TODO: Highlight the string found in the album card
 
     })
 
