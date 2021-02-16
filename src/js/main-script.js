@@ -84,6 +84,7 @@
             resultsEl.innerHTML = '';
 
             // Render the albums
+            // TODO: Use map
             for (let i = 0; i < 25; i++) {
                 renderAlbums(albums[i])
             }
@@ -93,6 +94,7 @@
             resultsEl.innerHTML = '';
 
             // Render the albums
+            // TODO: Use map
             for (let i = 25; i < albums.length; i++) {
                 renderAlbums(albums[i])
             }
@@ -285,6 +287,7 @@
             // Add the new album to the main array
             albums.push(newAlbum);
 
+            // TODO: Add this to the refreshAlbums function
             // Check what page we're on and refresh
             if (pagination1.closest('li').classList.contains('active')) {
                 refreshAlbums(1);
@@ -298,18 +301,44 @@
 
     })
 
+    // User starts with the search
     search.addEventListener('keyup', e => {
 
         // Only start once user has more than 3 letters
-        if (e.target.value.length < 3) return
+        if (e.target.value.length < 3) {
 
-        console.log(e.target.value);
+            // Check what page we're on and refresh
+            if (pagination1.closest('li').classList.contains('active')) {
+                refreshAlbums(1);
+            } else {
+                refreshAlbums(2);
+            }
 
-        const matchAlbums = albums.map((o) => {return o.album_title; }).indexOf(e.target.value)
-        const matchArtists = albums.map((o) => {return o.artist.name; }).indexOf(e.target.value)
+            return
+        }
 
-        console.log(matchAlbums)
-        console.log(matchArtists)
+        // Set a case-insensitive regex
+        const regexp = new RegExp(e.target.value, 'i');
+
+        // Filter the albums and return the index of found item(s)
+        const matchAlbums = albums.filter(o => {
+            if (regexp.test(o.album_title)) {
+                return albums.indexOf(o)
+            }
+            if (regexp.test(o.artist.name)) {
+                return albums.indexOf(o)
+            }
+        });
+
+        // Clear all albums from the doc
+        resultsEl.innerHTML = '';
+
+        // Render the returned indexes for albums
+        matchAlbums.map((o) => {
+            renderAlbums(o)
+        })
+
+        //TODO: Highlight the string found in the album card
 
     })
 
