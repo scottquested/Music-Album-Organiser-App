@@ -11,7 +11,7 @@ The albums needed to be editable, and the Artist name would need to be updated g
 2. cd into the new directory
 3. Run `npm install` to install dependencies
 
-Bootstrap is already include in the project. To update the SCSS, there is one override file located in src/scss/main.scss. To switch between a light and dark theme, update the variable $dark: true at the top of the main.scss.
+Bootstrap is already include in the project. To update the SCSS, there is one override file located in `src/scss/main.scss`. To switch between a light and dark theme, update the variable `$dark: true` at the top of the `main.scss`.
 
 ## Development
 The development setup has a built-in dev server that will update as you make a change. Run the below command and navigate in your browser to [localhost:3200](localhost:3200).
