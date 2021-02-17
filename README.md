@@ -16,7 +16,7 @@ Bootstrap is already include in the project. To update the SCSS, there is one ov
 ## Development
 The development setup has a built-in dev server that will update as you make a change. Run the below command and navigate in your browser to `localhost:3200`.
 ```
-run npm build:dev
+npm run build:dev
 ```
 
 ## Production
