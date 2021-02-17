@@ -58,6 +58,10 @@ body {
 			color: white;
 		}
 	}
+
+	.fa-heart-o, .fa-heart {
+		pointer-events: none;
+	}
 }
 
 .modal-background {
