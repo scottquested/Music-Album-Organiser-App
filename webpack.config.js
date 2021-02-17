@@ -32,7 +32,7 @@ module.exports = {
 		],
 	},
 	devServer: {
-		contentBase: path.join(__dirname, 'docs'),
+		contentBase: path.join(__dirname, 'dist'),
 		compress: true,
 		port: 3200,
 	},
@@ -93,7 +93,8 @@ module.exports = {
 						loader: 'file-loader',
 						options: {
 							name: '[name].[ext]',
-							outputPath: 'fonts/'
+							outputPath: 'docs/fonts',
+							publicPath: '../../../docs/fonts'
 						}
 					}
 				]
@@ -111,8 +112,7 @@ module.exports = {
 	],
 	output: {
 		path: path.resolve(__dirname, 'docs'),
-		pathinfo: false,
-		publicPath: '/',
+		pathinfo: true,
 		filename: env === 'production' ? 'js/min/[name].bundle.min.js?[contenthash:8]' : 'js/[name].bundle.js'
 	}
 }
