@@ -12,6 +12,7 @@
     const pagination2 = document.querySelector('.js-pagination-2')
     const search = document.querySelector('.js-search')
     const filterFavs = document.querySelector('.js-show-fav')
+    const filterFavsEdit = document.querySelector('.js-album-fav-edit')
 
     // Main array to hold all albums
     let albums = [];
@@ -246,6 +247,14 @@
             modalForm.elements['year'].value = albums[albumPos].year;
             modalForm.elements['condition'].value = albums[albumPos].condition;
             modalForm.elements['albumId'].value = albums[albumPos].id;
+            if (albums[albumPos].fav) {
+                filterFavsEdit.classList.remove('fa-heart-o')
+                filterFavsEdit.classList.add('fa-heart')
+            } else {
+                filterFavsEdit.classList.remove('fa-heart-o')
+                filterFavsEdit.classList.add('fa-heart')
+            }
+
         }
 
         if (e.target.classList.contains('js-modal-close')) {
@@ -328,7 +337,7 @@
                 },
                 year: modalForm.elements['year'].value,
                 condition: modalForm.elements['condition'].value,
-                fav: false
+                fav: document.querySelector('.js-album-fav-edit').classList.contains('fa-heart')
             }
 
             // Add the new album to the main array
