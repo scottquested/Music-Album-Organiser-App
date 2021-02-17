@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Music Album Organiser</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
 </head>
 <body class="mt-4">
 
@@ -25,9 +26,9 @@
 				<input id="search" type="text" name="search" class="form-control js-search mb-3" placeholder="Search for your album..." value="">
 			</div>
 			<div class="col-lg-3">
-				<nav>
-					<button class="page-link js-show-fav pull-left">Filter by <i class="fa fa-heart-o"></i></button>
-					<ul class="pagination justify-content-end">
+				<button class="page-link pull-left js-show-fav">Filter by <i class="fa fa-heart-o"></i></button>
+				<nav class="pull-right">
+					<ul class="pagination">
 						<li class="page-item active"><button class="page-link js-pagination-1">1</button></li>
 						<li class="page-item"><button class="page-link js-pagination-2">2</button></li>
 					</ul>
