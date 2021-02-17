@@ -112,7 +112,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'docs'),
 		pathinfo: false,
-		publicPath: '.',
+		publicPath: '/',
 		filename: env === 'production' ? 'js/min/[name].bundle.min.js?[contenthash:8]' : 'js/[name].bundle.js'
 	}
 }

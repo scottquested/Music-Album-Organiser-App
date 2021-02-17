@@ -1,6 +1,10 @@
+$dark-theme: true;
+
 body {
-	color: white;
-	background-color: #121215;
+	@if($dark-theme) {
+		color: white;
+		background-color: #121215;
+	}
 }
 
 .main-title {
@@ -8,7 +12,9 @@ body {
 	font-size: 42px;
 	font-weight: bold;
 	text-align: center;
-	border-bottom: 1px solid #404040;
+	@if($dark-theme) {
+		border-bottom: 1px solid #404040;
+	}
 }
 
 .page-item {
@@ -35,15 +41,22 @@ body {
 }
 
 .page-link {
-	background-color: #1b1e21;
-	border: 1px solid #404040;
-	color: white;
 	border-radius: 5px;
+	color: #1b1e21;
+
+	@if($dark-theme) {
+		background-color: #1b1e21;
+		border: 1px solid #404040;
+		color: white;
+	}
 
 	&:hover {
-		border: 1px solid #404040;
-		background-color: darken(#1b1e21, 5%);
-		color: white;
+		color: #1b1e21;
+		@if($dark-theme) {
+			border: 1px solid #404040;
+			background-color: darken(#1b1e21, 5%);
+			color: white;
+		}
 	}
 }
 
@@ -59,11 +72,15 @@ body {
 }
 
 .modal-content {
-	background-color: #1b1e21;
-	border: 1px solid #404040;
+	@if($dark-theme) {
+		background-color: #1b1e21;
+		border: 1px solid #404040;
+	}
 
 	.modal-header {
-		border-bottom: 1px solid #404040;
+		@if($dark-theme) {
+			border-bottom: 1px solid #404040;
+		}
 	}
 
 	.modal-title {
@@ -71,7 +88,9 @@ body {
 	}
 
 	.modal-footer {
-		border-top: 1px solid #404040;
+		@if($dark-theme) {
+			border-top: 1px solid #404040;
+		}
 	}
 }
 
@@ -80,28 +99,39 @@ body {
 		position: relative;
 		z-index: -1;
 		text-shadow: none;
-		color: white;
+
+		@if($dark-theme) {
+			color: white;
+		}
 	}
 }
 
 .form-control {
-	background-color: #1b1e21;
-	border: 1px solid #404040;
-	color: white;
-
-	&:focus {
-		background-color: darken(#1b1e21, 5%);
+	@if($dark-theme) {
+		background-color: #1b1e21;
 		border: 1px solid #404040;
 		color: white;
+	}
+
+	&:focus {
+		@if($dark-theme) {
+			background-color: darken(#1b1e21, 5%);
+			border: 1px solid #404040;
+			color: white;
+		}
 	}
 }
 
 .card {
-	background-color: #1b1e21;
-	border: 1px solid #404040;
+	@if($dark-theme) {
+		background-color: #1b1e21;
+		border: 1px solid #404040;
+	}
 
 	.card-footer {
-		border-top: 1px solid #404040;
+		@if($dark-theme) {
+			border-top: 1px solid #404040;
+		}
 	}
 }
 
