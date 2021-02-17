@@ -251,8 +251,8 @@
                 filterFavsEdit.classList.remove('fa-heart-o')
                 filterFavsEdit.classList.add('fa-heart')
             } else {
-                filterFavsEdit.classList.remove('fa-heart-o')
-                filterFavsEdit.classList.add('fa-heart')
+                filterFavsEdit.classList.add('fa-heart-o')
+                filterFavsEdit.classList.remove('fa-heart')
             }
 
         }
