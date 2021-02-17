@@ -1,6 +1,6 @@
 {
   "name": "music-album-organiser-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": ".",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
